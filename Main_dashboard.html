@@ -1,0 +1,237 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Toronto Crime Data set</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- Leaflet JavaScript code -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- D3 library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!--Plotly-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- Heat Map-->
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <style>
+        body {
+            margin-left: 20px;
+        }
+
+        .container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .center-panel {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: auto;
+            /* Allow height to adjust based on content */
+        }
+
+        .rap-sheet {
+            width: 100%;
+            /* Extend to full width of the page */
+            max-height: 200px;
+            /* Set maximum height to 300 pixels */
+            background-color: #f0f0f0;
+            /* Example background color */
+            padding: 20px;
+            /* Example padding */
+            border: 1px solid #ccc;
+            /* Example border */
+            margin-left: 20px;
+        }
+
+        /* Set a fixed height for the map container */
+        #map-id {
+            height: 500px;
+            width: 45%;
+            margin-left:1.5px;
+            margin-right:15px;
+        }
+
+        #map-id2 {
+            height: 500px;
+            width: 45%;
+            margin-left:15px;
+            margin-right:1.5px;
+        }
+
+        .flex-container {
+            display: flex;
+            align-items: stretch;
+        }
+
+        div.description {
+            text-align: center;
+            font-size: 14;
+        }
+
+        .vl {
+            border-left: 1px solid green;
+            height: 500px;
+        }
+
+
+       
+    </style>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+
+</head>
+
+<body>
+    <div>
+        <p>Toronto PD</p>
+        <div class="row">
+            <div class="col-md-4" id="map-id"></div>
+            <div class="col-md-4" id="map-id2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 jumbotron text-center">
+                <h2>Welcome to the TORONTO PD</h2>
+            </div>
+        </div>
+        <div class="row center-panel">
+            <div class="col-md-2 well">
+                <h5>Select Year:</h5>
+                <select id="yearDropdown"></select>
+            </div>
+            <div class="col-md-2 well">
+                <h5>Select ID:</h5>
+                <select id="idDropdown"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div id="data-table" table-striped>
+                    <!-- Table content will be populated here -->
+                </div>
+            </div>
+            <!-- Plotting Graph -->
+            <div class="col-md-8">
+                <div class="row graph-container">
+                    <div class="col-md-8">
+                        <div id="pie">
+                            <!-- Bar graph content will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <div>
+                <h2>Trends and other information</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 well">
+                <h5>Select Year:</h5>
+                <select id="barYearDrop">
+                    <option value="2016" selected>2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Move the combined-graph div here to place the graph below the dropdown -->
+                <div id="combined-graph">
+                    <!-- Bar graph content will be populated here -->
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="pie-graph">
+                    <!-- Pie graph content will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2>HOMICIDE</h2>
+    <div class="row center-panel dropdown-container">
+        <div class="col-md-2">
+            <div class="homi">
+                <h5>Select Year:</h5>
+                <select id="HomiYearDrop">
+                    <option value="2016" selected>2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div id="barGraph"></div>
+        </div>
+    </div>
+    <table id="HomiTable" class="table table-striped">
+        <tbody>
+            <!-- Table data will be inserted here using JavaScript -->
+        </tbody>
+    </table>
+    <div class="row dropdown-container">
+        <div>
+            <div class="col-md-4">
+                <div id="boxContainer">
+                    <div id="box">
+                        <!-- Content for the 'box' container goes here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="col-md-4">
+                <div id="pieContainer">
+                    <div id="homi-pie">
+                        <!-- Content for the 'pie' container goes here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="static/js/Homicide_graph.js"></script>
+
+</body>
+<script src="static/js/dashboard.js"></script>
+<script src="static/js/Plotly.js"></script>
+<script src="static/js/BarGraph.js"></script>
+<script src="static/js/Homicide_graph.js"></script>
+<script src="static/js/Heat_map_toronto.js"></script>
+<!-- Our CSS -->
+<link rel="stylesheet" type="text/css" href="static/css/style.css">
+<!-- Marker cluster JavaScript code -->
+<script type="text/javascript"
+    src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
+
+<!-- Marker cluster CSS -->
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
+<link rel="stylesheet" type="text/css"
+    href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css">
+<script src="static/js/choro_toronto.js"></script>
+
+</body>
+
+</html>
