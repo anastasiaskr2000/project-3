@@ -1,0 +1,18 @@
+<html lang="en">
+<head>
+<title>Hello</title>
+</head>
+<body>
+    <h1 style="display: block;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;"
+    >Toronto Crime Data</h1>
+    {% for e in plots %}
+        <img src="{{e}}" width="1000" height="500" style="display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;">
+    {% endfor %}
+
+</body>
+</html>
