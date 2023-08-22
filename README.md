@@ -2,7 +2,7 @@ With crime rates rising it is critical to look at which areas are the most dange
 
 The main crimes currently happening across the GTA are shootings, stabbings, assault, auto theft, break and entry, and Robbery. By examining the data collected it was evident that Downtown has the most crimes committed with the majority of it being assaults. 
 
-The steps taken to document the record and data collected are the following:
+The steps taken to document the records and data collected are the following:
 
 
 	Using Python to clean and organize the data.
