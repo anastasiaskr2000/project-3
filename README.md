@@ -8,7 +8,7 @@ The steps taken to document the records and data collected are the following:
 	Using Python to clean and organize the data.
 	Creating Visualizations by HTML and Javascript.
 	Making barcharts, pie charts and line graphs in Javascript.
-	A Leaflet chart built from data gathered through web scraping.
+	Maps made by Leaflet built from data gathered through web scraping.
 	A dashboard page with multiple charts that all reference the same data.
 	The dashboards contain multiple features such as dropdowns, filters, or a zoom feature.
 
